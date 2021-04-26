@@ -25,7 +25,6 @@ img {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
     background: #eee;
-    height: 100%;
     padding: 20px;
   }
   
