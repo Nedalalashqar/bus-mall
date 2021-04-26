@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 'use strict';
 
 
@@ -74,7 +73,8 @@ function eventHandler( e ) {
     renderIma();
 
   } else {
-    console.log( Ima.all );
+    renderhart();
+
   }
 }
 
@@ -111,7 +111,7 @@ function renderhart() {
   let shown = [];
   for ( let i = 0; i < Ima.all.length; i++ ) {
     clicks.push( Ima.all[i].clicks );
-    names.push( Ima.all[i].names );
+    names.push( Ima.all[i].name );
     shown.push( Ima.all[i].shown );
   }
 
@@ -150,6 +150,7 @@ function renderhart() {
 
 
 
+
 function randomNumber( min, max ) {
   min = Math.ceil( min );
   max = Math.floor( max );
@@ -176,4 +177,3 @@ function viewResultsFunction( evt ){
 
 
 viewResult.addEventListener('click' , viewResultsFunction );
-renderhart();

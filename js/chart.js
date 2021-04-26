@@ -3,17 +3,7 @@ $.getScript('js/app.js' , function){
 'use strict';
 
 
-function renderhart() {
 
-    let clicks = [];
-    let names = [];
-    let shown = [];
-    for ( let i = 0; i < Ima.all.length; i++ ) {
-      clicks.push( Ima.all[i].clicks );
-      names.push( Ima.all[i].names );
-      shown.push( Ima.all[i].shown );
-    }
-  
   
     let ctx = document.getElementById( 'myChart' ).getContext( '2d' );
     let myChart = new Chart( ctx, {
