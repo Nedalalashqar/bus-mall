@@ -23,7 +23,6 @@ let imgArr = [
   'water-can.jpg',
 ];
 
-//const results = document.getElementById( 'results' );
 const imageSec = document.getElementById( 'imageSec' );
 const leftImage = document.getElementById( 'leftImage' );
 const mediumImage = document.getElementById( 'mediumImage' );
@@ -32,24 +31,14 @@ const viewResult = document.getElementById( 'viewResult' );
 const resultContainer = document.getElementById( 'res' );
 
 
-
-// let img = ['image 1', 'image 2', 'image 3', 'image 4', 'image 5', 'image 6', 'image 7', 'image 8', 'image 9', 'image 10' ,
-//'image 11', 'image 12' , 'image 13' , 'image 14' , 'image 15' , 'image 16' , 'image 17' , 'image 18' 'image 19' , 'image 20'
-//, 'image 21' , 'image 22'
-//]
-
 let clickNumber = 0;
 let leftImageIndex = 0;
 let rightImageIndex = 0;
 let mediumImageIndex = 0;
-let attempt=25;
-
-//let Results = {
-//  name: 'Results',
-//},
+let attempt = 25;
 
 function Ima( name , img ) {
-  this.name = name.split('.')[0];
+  this.name = name.split( '.' )[0];
   this.img = `./img/${name}`;
   this.shown = 0;
   this.clicks = 0;
@@ -167,19 +156,18 @@ function viewResultsFunction( evt ){
   let ulE = document.createElement( 'li' );
   resultContainer.appendChild( ulE );
 
-  for (let i =0 ; i < Ima.all.length ; i++) {
-    let liE =document.createElement('li');
-    ulE.appendChild(liE);
+  for ( let i = 0 ; i < Ima.all.length ; i++ ) {
+    let liE = document.createElement( 'li' );
+    ulE.appendChild( liE );
     liE.textContent = `${Ima.all[i].name} had a ${Ima.all[i].clicks} votes , and was seen a ${Ima.all[i].shown}.`;
   }
 
-  viewResult.removeEventListener('click' , viewResultsFunction );
+  viewResult.removeEventListener( 'click' , viewResultsFunction );
 
 
 }
 
 
-viewResult.addEventListener('click' , viewResultsFunction );
+viewResult.addEventListener( 'click' , viewResultsFunction );
 
 renderhart();
-s
