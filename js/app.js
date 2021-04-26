@@ -38,7 +38,7 @@ let mediumImageIndex = 0;
 let attempt = 25;
 
 function Ima( name , img ) {
-  this.name = name.split( '.' )[0];
+  this.name = name.split('.')[0];
   this.img = `./img/${name}`;
   this.shown = 0;
   this.clicks = 0;
@@ -156,18 +156,18 @@ function viewResultsFunction( evt ){
   let ulE = document.createElement( 'li' );
   resultContainer.appendChild( ulE );
 
-  for ( let i = 0 ; i < Ima.all.length ; i++ ) {
-    let liE = document.createElement( 'li' );
-    ulE.appendChild( liE );
+  for ( let i = 0 ; i < Ima.all.length ; i++) {
+    let liE = document.createElement('li');
+    ulE.appendChild(liE);
     liE.textContent = `${Ima.all[i].name} had a ${Ima.all[i].clicks} votes , and was seen a ${Ima.all[i].shown}.`;
   }
 
-  viewResult.removeEventListener( 'click' , viewResultsFunction );
+  viewResult.removeEventListener('click' , viewResultsFunction );
 
 
 }
 
 
-viewResult.addEventListener( 'click' , viewResultsFunction );
+viewResult.addEventListener('click' , viewResultsFunction );
 
 renderhart();
