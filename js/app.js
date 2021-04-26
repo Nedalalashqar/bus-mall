@@ -1,29 +1,26 @@
 'use strict';
 
-
 let imgArr = [
-  'bag',
-  'banana',
-  'bathroom',
-  'boots',
-  'boots',
-  'breakfast',
-  'bubblegum',
-  'chair',
-  'cthulhu',
-  'dog-duck',
-  'dragon',
-  'pen',
-  'pet-sweep',
-  'scissors',
-  'shark',
-  'sweep',
-  'tauntaun',
-  'tauntaun',
-  'unicorn',
-  'usb',
-  'water-can',
-  'water-can'
+  'bag.jpg',
+  'banana.jpg',
+  'bathroom.jpg',
+  'boots.jpg',
+  'breakfast.jpg',
+  'bubblegum.jpg',
+  'chair.jpg',
+  'cthulhu.jpg',
+  'dog-duck.jpg',
+  'dragon.jpg',
+  'pen.jpg',
+  'pet-sweep.jpg',
+  'scissors.jpg',
+  'shark.jpg',
+  'sweep.png',
+  'tauntaun.jpg',
+  'tauntaun.jpg',
+  'unicorn.jpg',
+  'usb.gif',
+  'water-can.jpg',
 ];
 
 //const results = document.getElementById( 'results' );
@@ -31,9 +28,8 @@ const imageSec = document.getElementById( 'imageSec' );
 const leftImage = document.getElementById( 'leftImage' );
 const mediumImage = document.getElementById( 'mediumImage' );
 const rightImage = document.getElementById( 'rightImage' );
-
-
-
+const viewResult = document.getElementById( 'viewResult' );
+const resultContainer = document.getElementById( 'res' );
 
 
 
@@ -46,16 +42,15 @@ let clickNumber = 0;
 let leftImageIndex = 0;
 let rightImageIndex = 0;
 let mediumImageIndex = 0;
-
+let attempt=25;
 
 //let Results = {
 //  name: 'Results',
 //},
 
-
-function Ima( name ) {
-  this.name = name;
-  this.img = `./img/${name}.jpg`;
+function Ima( name , img ) {
+  this.name = name.split('.')[0];
+  this.img = `./img/${name}`;
   this.shown = 0;
   this.clicks = 0;
   Ima.all.push( this );
@@ -68,7 +63,7 @@ for ( let i = 0; i < imgArr.length; i++ ) {
 }
 
 function eventHandler( e ) {
-  if ( ( e.target.id === 'leftImage' || e.target.id === 'rightImage' || e.target.id === 'mediumImage' ) && clickNumber < 25 ) {
+  if ( ( e.target.id === 'leftImage' || e.target.id === 'rightImage' || e.target.id === 'mediumImage' ) && clickNumber < attempt ) {
 
     if ( e.target.id === 'leftImage' ) {
       Ima.all[leftImageIndex].clicks++;
@@ -90,16 +85,15 @@ function eventHandler( e ) {
   }
 }
 
-
 function renderIma() {
   let leftIndex = randomNumber( 0, imgArr.length - 1 );
-  let mediumIndex = randomNumber( 0, imgArr.length - 1 );
+  let mediumIndex;
   let rightIndex;
-
 
   do {
     rightIndex = randomNumber( 0, imgArr.length - 1 );
-  } while ( leftIndex === rightIndex === mediumIndex );
+    mediumIndex = randomNumber( 0, imgArr.length - 1 );
+  } while ( leftIndex === rightIndex || leftIndex === mediumIndex || rightIndex === mediumIndex );
 
   leftImage.src = Ima.all[leftIndex].img;
   mediumImage.src = Ima.all[mediumIndex].img;
@@ -112,16 +106,10 @@ function renderIma() {
   Ima.all[leftIndex].shown++;
   Ima.all[mediumIndex].shown++;
   Ima.all[rightIndex].shown++;
-
 }
 
 imageSec.addEventListener( 'click', eventHandler );
 renderIma();
-
-
-
-
-
 
 function randomNumber( min, max ) {
   min = Math.ceil( min );
@@ -130,8 +118,20 @@ function randomNumber( min, max ) {
 }
 
 
+function viewResultsFunction( evt ){
+  let ulE = document.createElement( 'li' );
+  resultContainer.appendChild( ulE );
+
+  for (let i =0 ; i < Ima.all.length ; i++) {
+    let liE =document.createElement('li');
+    ulE.appendChild(liE);
+    liE.textContent = `${Ima.all[i].name} had a ${Ima.all[i].clicks} votes , and was seen a ${Ima.all[i].shown}.`;
+  }
+
+  viewResult.removeEventListener('click' , viewResultsFunction );
 
 
+}
 
 
-
+viewResult.addEventListener('click' , viewResultsFunction );
