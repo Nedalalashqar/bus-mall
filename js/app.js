@@ -80,6 +80,12 @@ function eventHandler( e ) {
 }
 
 function renderIma() {
+
+  Ima.prevIndex = [];
+  if (clickNumber > 0){
+    Ima.prevIndex = [leftImageIndex , mediumImageIndex , rightImageIndex];
+  }
+
   let leftIndex = randomNumber( 0, imgArr.length - 1 );
   let mediumIndex;
   let rightIndex;
@@ -152,6 +158,24 @@ function renderhart() {
 
 
 
+
+
+
+function viewResultsFunction( evt ){
+  let ulE = document.createElement( 'li' );
+  resultContainer.appendChild( ulE );
+
+  for (let i =0 ; i < Ima.all.length ; i++) {
+    let liE =document.createElement('li');
+    ulE.appendChild(liE);
+    liE.textContent = `${Ima.all[i].name} had a ${Ima.all[i].clicks} votes , and was seen a ${Ima.all[i].shown}.`;
+  }
+
+  viewResult.removeEventListener('click' , viewResultsFunction );
+
+
+}
+
 function randomNumber( min, max ) {
   min = Math.ceil( min );
   max = Math.floor( max );
@@ -170,24 +194,6 @@ function randomNumber( min, max ) {
   } while (!allowed);
   return rand;
 }
-
-
-function viewResultsFunction( evt ){
-  let ulE = document.createElement( 'li' );
-  resultContainer.appendChild( ulE );
-
-  for (let i =0 ; i < Ima.all.length ; i++) {
-    let liE =document.createElement('li');
-    ulE.appendChild(liE);
-    liE.textContent = `${Ima.all[i].name} had a ${Ima.all[i].clicks} votes , and was seen a ${Ima.all[i].shown}.`;
-  }
-
-  viewResult.removeEventListener('click' , viewResultsFunction );
-
-
-}
-
-
 
 
 viewResult.addEventListener('click' , viewResultsFunction );
