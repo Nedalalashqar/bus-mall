@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 'use strict';
 
 
@@ -25,23 +26,24 @@ let imgArr = [
   'water-can.jpg',
 ];
 
-//const results = document.getElementById( 'results' );
+//const imaTrack = document.getElementById( 'imaTrack' );
 const imageSec = document.getElementById( 'imageSec' );
 const leftImage = document.getElementById( 'leftImage' );
 const mediumImage = document.getElementById( 'mediumImage' );
 const rightImage = document.getElementById( 'rightImage' );
 const viewResult = document.getElementById( 'viewResult' );
-const resultContainer = document.getElementById( 'res' );
+//const resultContainer = document.getElementById( 'res' );
+const track = document.getElementById( 'track' );
 
 let clickNumber = 0;
 let leftImageIndex = 0;
 let rightImageIndex = 0;
 let mediumImageIndex = 0;
-let attempt=25;
+let attempt = 25;
 
 
-function Ima( name , img ) {
-  this.name = name.split('.')[0];
+function Ima( name, img ) {
+  this.name = name.split( '.' )[0];
   this.img = `./img/${name}`;
   this.shown = 0;
   this.clicks = 0;
@@ -49,7 +51,7 @@ function Ima( name , img ) {
 }
 
 Ima.all = [];
-Ima.prevIndex = [] ;
+Ima.prevIndex = [];
 
 for ( let i = 0; i < imgArr.length; i++ ) {
   new Ima( imgArr[i] );
@@ -75,6 +77,7 @@ function eventHandler( e ) {
 
   } else {
     renderhart();
+    localStorage.setItem( 'track', JSON.stringify( Ima.all ) );
 
   }
 }
@@ -82,8 +85,8 @@ function eventHandler( e ) {
 function renderIma() {
 
   Ima.prevIndex = [];
-  if (clickNumber > 0){
-    Ima.prevIndex = [leftImageIndex , mediumImageIndex , rightImageIndex];
+  if ( clickNumber > 0 ) {
+    Ima.prevIndex = [leftImageIndex, mediumImageIndex, rightImageIndex];
   }
 
   let leftIndex = randomNumber( 0, imgArr.length - 1 );
@@ -108,6 +111,38 @@ function renderIma() {
   Ima.all[rightIndex].shown++;
 }
 
+track.addEventListener( 'click', subHandle );
+function subHandle( event ) {
+  event.preventDefault();
+  const name = event.target.name.value;
+  const img = event.target.img.value;
+  const shown = event.target.shown.value;
+  const clicks = event.target.clicks.value;
+  new Ima( name, img, shown, clicks );
+  console.log( Ima.all );
+  saveData();
+
+}
+
+function saveData() {
+  localStorage.setItem( 'track', JSON.stringify( Ima.all ) );
+
+}
+
+//function renderImage()
+function getData() {
+  let data = JSON.parse( localStorage.getItem( 'track' ) );
+  if ( data ) {
+    for ( let i = 0; i < data.length; i++ ) {
+      new Ima( data[i].name, data[i].img, data[i].shown, data[i].clicks );
+    }
+    viewResultsFunction();
+
+  }
+}
+let newFun = getData;
+newFun();
+
 imageSec.addEventListener( 'click', eventHandler );
 renderIma();
 
@@ -122,7 +157,12 @@ function renderhart() {
     shown.push( Ima.all[i].shown );
   }
 
+
+
+
   let ctx = document.getElementById( 'myChart' ).getContext( '2d' );
+  // eslint-disable-next-line no-undef
+  // eslint-disable-next-line no-unused-vars
   let myChart = new Chart( ctx, {
     type: 'bar',
     data: {
@@ -135,7 +175,7 @@ function renderhart() {
         borderColor:
           'rgba(255, 99, 132, 1)',
         borderWidth: 1
-      },{
+      }, {
         label: '# of Shown',
         data: shown,
         backgroundColor:
@@ -156,22 +196,15 @@ function renderhart() {
 }
 
 
-
-
-
-
-
-function viewResultsFunction( evt ){
-  let ulE = document.createElement( 'li' );
-  resultContainer.appendChild( ulE );
-
-  for (let i =0 ; i < Ima.all.length ; i++) {
-    let liE =document.createElement('li');
-    ulE.appendChild(liE);
+function viewResultsFunction( evt ) {
+  track.innerHTML = '';
+  for ( let i = 0; i < Ima.all.length; i++ ) {
+    let liE = document.createElement( 'li' );
+    track.appendChild( liE );
     liE.textContent = `${Ima.all[i].name} had a ${Ima.all[i].clicks} votes , and was seen a ${Ima.all[i].shown}.`;
   }
 
-  viewResult.removeEventListener('click' , viewResultsFunction );
+  viewResult.removeEventListener( 'click', viewResultsFunction );
 
 
 }
@@ -181,19 +214,19 @@ function randomNumber( min, max ) {
   max = Math.floor( max );
 
   let rand;
-  let allowed ;
+  let allowed;
   do {
     rand = Math.floor( Math.random() * ( max - min + 1 ) + min );
-    allowed = true ;
-    for(let i = 0 ; i < Ima.prevIndex.length ; i++){
-      if (Ima.prevIndex[i] === rand){
+    allowed = true;
+    for ( let i = 0; i < Ima.prevIndex.length; i++ ) {
+      if ( Ima.prevIndex[i] === rand ) {
         allowed = false;
 
       }
     }
-  } while (!allowed);
+  } while ( !allowed );
   return rand;
 }
 
 
-viewResult.addEventListener('click' , viewResultsFunction );
+viewResult.addEventListener( 'click', viewResultsFunction );
