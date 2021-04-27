@@ -78,7 +78,6 @@ function eventHandler( e ) {
   } else {
     renderhart();
     localStorage.setItem( 'track', JSON.stringify( Ima.all ) );
-
   }
 }
 
@@ -126,7 +125,6 @@ function subHandle( event ) {
 
 function saveData() {
   localStorage.setItem( 'track', JSON.stringify( Ima.all ) );
-
 }
 
 //function renderImage()
@@ -156,9 +154,6 @@ function renderhart() {
     names.push( Ima.all[i].name );
     shown.push( Ima.all[i].shown );
   }
-
-
-
 
   let ctx = document.getElementById( 'myChart' ).getContext( '2d' );
   // eslint-disable-next-line no-undef
@@ -195,7 +190,6 @@ function renderhart() {
   } );
 }
 
-
 function viewResultsFunction( evt ) {
   track.innerHTML = '';
   for ( let i = 0; i < Ima.all.length; i++ ) {
@@ -203,10 +197,7 @@ function viewResultsFunction( evt ) {
     track.appendChild( liE );
     liE.textContent = `${Ima.all[i].name} had a ${Ima.all[i].clicks} votes , and was seen a ${Ima.all[i].shown}.`;
   }
-
   viewResult.removeEventListener( 'click', viewResultsFunction );
-
-
 }
 
 function randomNumber( min, max ) {
@@ -227,6 +218,5 @@ function randomNumber( min, max ) {
   } while ( !allowed );
   return rand;
 }
-
 
 viewResult.addEventListener( 'click', viewResultsFunction );
