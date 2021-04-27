@@ -49,6 +49,7 @@ function Ima( name , img ) {
 }
 
 Ima.all = [];
+Ima.prevIndex = [] ;
 
 for ( let i = 0; i < imgArr.length; i++ ) {
   new Ima( imgArr[i] );
@@ -154,7 +155,20 @@ function renderhart() {
 function randomNumber( min, max ) {
   min = Math.ceil( min );
   max = Math.floor( max );
-  return Math.floor( Math.random() * ( max - min + 1 ) + min );
+
+  let rand;
+  let allowed ;
+  do {
+    rand = Math.floor( Math.random() * ( max - min + 1 ) + min );
+    allowed = true ;
+    for(let i = 0 ; i < Ima.prevIndex.length ; i++){
+      if (Ima.prevIndex[i] === rand){
+        allowed = false;
+
+      }
+    }
+  } while (!allowed);
+  return rand;
 }
 
 
